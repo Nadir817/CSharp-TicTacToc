@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 internal class Program
 {
@@ -33,10 +34,39 @@ internal class Program
         } else { return false; }
     }
 
+    public static bool WinCheck()
+    {
+        if (boards[0,0] == boards[0,1] && boards[0, 1] == boards[0, 2])
+        {
+            return true;
+        } else if (boards[1, 0] == boards[1, 1] && boards[1, 1] == boards[1, 2])
+        {
+            return true;
+        } else if (boards[2, 0] == boards[2, 1] && boards[2, 1] == boards[2, 2])
+        {
+            return true;
+        } else if (boards[0, 0] == boards[1, 0] && boards[1, 0] == boards[2, 0])
+        {
+            return true;
+        } else if (boards[0, 1] == boards[1, 1] && boards[1, 1] == boards[2, 1])
+        {
+            return true;
+        } else if (boards[0, 2] == boards[1, 2] && boards[1, 2] == boards[2, 2])
+        {
+            return true;
+        } else if (boards[0, 0] == boards[1, 1] && boards[1, 1] == boards[2, 2])
+        {
+            return true;
+        } else if (boards[0, 2] == boards[1, 1] && boards[1, 1] == boards[2, 0])
+        {
+            return true;
+        } else { return false; }
+    }
+
     private static void Main(string[] args)
     {
         int player = 1;
-
+        int count = 0;
         
         do
         {
@@ -58,6 +88,24 @@ internal class Program
                 continue;
             }
             PlacePiece(player, row, col);
+            count++;
+            if (count > 4)
+            {
+                if (WinCheck())
+                {
+                    Console.Clear();
+                    SetField();
+                    Console.WriteLine("Winner is player {0}", player);
+                    break;
+                }
+                if (count == 9)
+                {
+                    Console.Clear();
+                    SetField();
+                    Console.WriteLine("It is a tie.");
+                    break;
+                }
+            }
             player = player == 1 ? 2 : 1;
             Console.Clear();
 
